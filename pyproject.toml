@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "groundline"
+version = "0.1.0"
+description = "Check every sentence of a draft or AI summary against the source documents: changed numbers, invented quotes, overstated claims, unsupported lines"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["journalism", "fact-checking", "verification", "ai", "hallucination", "osint"]
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["pypdf>=4"]
+
+[project.urls]
+Homepage = "https://github.com/Ghongha007/groundline"
+Issues = "https://github.com/Ghongha007/groundline/issues"
+
+[project.scripts]
+groundline = "groundline.cli:main"
+
+[tool.setuptools]
+packages = ["groundline"]
