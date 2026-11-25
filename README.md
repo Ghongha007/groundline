@@ -119,6 +119,13 @@ python3 -m unittest discover -s tests -v
 
 The tests run the example files and use a fake model server to check that answers with made-up quotes are ignored.
 
+## Related
+
+- [osint-visuals](https://github.com/Ghongha007/osint-visuals): agent skills for evidence graphics: ship and flight tracks, shadow diagrams, 3D scenes, satellite before/after and scroll stories
+- [osint-skills](https://github.com/Ghongha007/osint-skills): agent skills for verification, geolocation, chronolocation and fact-checking
+- [verify-mcp](https://github.com/Ghongha007/verify-mcp): an MCP server with keyless, read-only verification lookups
+- [aitrace](https://github.com/Ghongha007/aitrace): check an image or video for traces of AI generation
+
 ## Licence
 
 MIT. Made by [OSINT JOURNO](https://www.osintjourno.com).
