@@ -19,6 +19,8 @@ publication or for your editor once you have reviewed the flags.
 
 It works offline, needs only Python 3.10 or newer, and uploads nothing. No model is downloaded.
 
+**Try it in your browser:** [huggingface.co/spaces/Ghongha007/groundline](https://huggingface.co/spaces/Ghongha007/groundline). The demo runs Groundline's own code inside the browser, so your sources and draft are not uploaded.
+
 ## What it is not
 
 **It is not a fact-checker.** It checks the draft against *your* sources, not against the world. If a source is wrong,
