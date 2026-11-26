@@ -51,16 +51,25 @@ def to_markdown(results: list[Result], sources: list[str], draft: str) -> str:
     return "\n".join(out)
 
 
-def methodology(sources: list[str], used_llm: bool, model: str = "") -> str:
+METHOD_TITLE = "Methodology note (draft)"
+METHOD_HINT = ("A draft for you to adapt before publishing. Edit it to say what you actually did: the tool cannot know "
+               "whether its flags were reviewed.")
+
+
+def methodology_body(sources: list[str], used_llm: bool, model: str = "") -> str:
     ai = (f"A language model{f' ({model})' if model else ''} gave a second opinion on each sentence. Its verdict was only "
           "accepted when the words it quoted actually appear in the source passage." if used_llm else
           "No AI model was used in the check.")
-    return ("## Methodology note\n\n"
-            f"Each sentence of the draft was compared with {len(sources)} source document(s) using Groundline "
+    return (f"Each sentence of the draft was compared with {len(sources)} source document(s) using Groundline "
             f"{__version__}, an open-source tool. For every sentence, the tool found the closest source passages by "
             "keyword matching and flagged numbers, direct quotes and names that do not appear in the sources, and wording "
-            f"that is more certain than the source. {ai} Every flag was then reviewed by a journalist against the original "
-            "documents. The tool helps find what to check; it does not decide what is true.\n")
+            f"that is more certain than the source. {ai} Before publishing, a journalist should review every flag against "
+            "the original documents; once that is done, say so here. The tool helps find what to check; it does not "
+            "decide what is true.")
+
+
+def methodology(sources: list[str], used_llm: bool, model: str = "") -> str:
+    return f"## {METHOD_TITLE}\n\n_{METHOD_HINT}_\n\n{methodology_body(sources, used_llm, model)}\n"
 
 
 CSS = """
@@ -110,12 +119,12 @@ def to_html(results: list[Result], sources: list[str], draft: str, model: str = 
                      for i, r in enumerate(results))
     pills = "".join(f'<span class="pill" style="background:{COLOUR[k]}">{v} {LABEL[k].lower()}</span>'
                     for k, v in c.items() if v)
-    note = methodology(sources, any(r.llm for r in results), model).replace("## Methodology note\n\n", "")
+    note = methodology_body(sources, any(r.llm for r in results), model)
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Groundline report</title><style>{CSS}</style></head><body>
 <header><h1>Groundline report</h1><div class="meta">Draft: {html.escape(draft)} &middot; Sources: {html.escape(', '.join(sources))} &middot; {date.today().isoformat()}</div>
 <div class="pills">{pills}</div><div class="meta">Click any sentence to see why it was flagged and the source passages it was matched to.</div></header>
 <main><div class="draft">{spans}</div><aside id="side"></aside></main>
-<div class="note"><b>Methodology note.</b> {html.escape(note)}</div>
+<div class="note"><b>{METHOD_TITLE}.</b> <i>{html.escape(METHOD_HINT)}</i><br>{html.escape(note)}</div>
 <script type="application/json" id="data">{blob}</script><script>{JS}</script></body></html>"""

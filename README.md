@@ -14,8 +14,8 @@ would ask about:
 - **Sentences with no matching passage at all**, which is where invented material usually sits.
 
 It writes a report you can click through: every sentence is coloured, and clicking one shows the flags and the source
-passages side by side, with matching words highlighted. It also writes a short methodology note you can adapt for
-publication or for your editor.
+passages side by side, with matching words highlighted. It also writes a short methodology note, marked as a draft, for you to adapt for
+publication or for your editor once you have reviewed the flags.
 
 It works offline, needs only Python 3.10 or newer, and uploads nothing. No model is downloaded.
 

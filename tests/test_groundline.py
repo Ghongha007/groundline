@@ -120,7 +120,13 @@ class TestCLI(unittest.TestCase):
             self.assertEqual(len(data["sentences"]), 8)
             h = Path(f"{d}/r.html").read_text()
             self.assertIn("Groundline report", h); self.assertNotIn("</script><script>alert", h)
-            self.assertIn("Methodology note", Path(f"{d}/r.md").read_text())
+            md = Path(f"{d}/r.md").read_text()
+            self.assertIn("Methodology note (draft)", md)
+            self.assertIn("Methodology note (draft)", h)
+            # the note must not claim a review the tool cannot know happened
+            for text in (md, h):
+                self.assertNotIn("was then reviewed", text)
+                self.assertIn("should review every flag", text)
 
     def test_missing_file(self):
         self.assertEqual(main(["check", "-s", "nope.txt", "-d", str(DRAFT), "-q"]), 2)
